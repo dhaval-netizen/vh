@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-01-replaceable-parts",
+    "slug": "2026-11-01-replaceable-parts",
+    "title": "Design for the part that wears out",
+    "body": "A worn pad shouldn't make an otherwise working device disposable.\n\nConsider an imagined utility that holds an object while doing a task. Suppose the contact pad wears out first. We would want to design its replacement alongside the original part.\n\nThe owner needs to be able to identify the part, find an affordable replacement and fit it safely. The attachment should make correct placement clear, including when the part is not fully seated.\n\nAfter replacement, the product should have a clear way to check readiness. If the task requires calibration, we would want it to happen locally with understandable feedback.\n\nAn agent could help check whether the device is ready for use. It still needs suitable inputs, and the physical design needs to make routine maintenance straightforward.\n\nFor v/h, attainable cost includes the parts and effort needed to keep a utility working. Our first product is in development. The pad is an illustrative example of an upkeep requirement we have yet to prove.",
+    "date": "2026-11-01",
+    "format": "text",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7522697409127391232/",
+    "media": [],
+    "publishedAt": "2026-11-01T16:33:47.034Z"
+  },
+  {
     "id": "2026-10-31-ordinary-conditions",
     "slug": "2026-10-31-ordinary-conditions",
     "title": "Test the utility where it will be used",
