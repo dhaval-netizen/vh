@@ -1,5 +1,36 @@
 [
   {
+    "id": "2026-11-02-using-your-hands",
+    "slug": "2026-11-02-using-your-hands",
+    "title": "Count the hands a task takes",
+    "body": "One button can still take two hands.\n\nImagine a small utility that slides across the table when you press Start. Your other hand has to steady it. If that hand is already holding the object, even beginning the task becomes awkward.\n\nFor v/h, we want to count the physical adjustments an owner has to make. During setup, use and removal, we would record every moment someone has to brace the device, change their grip or ask for help.\n\nWe would try the sequence with either hand and with people who have different hand sizes and grip strength. The force needed to use a control belongs in the design, alongside its label and position.\n\nAn agent under the hood could handle repeated adjustments during the job. The controls and housing still have to work with the person using them.\n\nOur first utility is in development. The document describes an imagined example and proposed checks, with the aim of making a new capability easier to use in an ordinary routine.",
+    "date": "2026-11-02",
+    "format": "document",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7523061560878006272/",
+    "media": [
+      {
+        "kind": "document",
+        "src": "assets/journal/2026-11-02-using-your-hands/2026-11-02-using-your-hands.pdf",
+        "alt": "Count the hands a task takes",
+        "pages": [
+          {
+            "src": "assets/journal/2026-11-02-using-your-hands/2026-11-02-using-your-hands-1.jpg",
+            "alt": "Count the hands a task takes. Page 1 of 3. A physical design question One button can still take two hands. A simple control can be awkward if pressing it moves the device. An imagined example during development. vh.do"
+          },
+          {
+            "src": "assets/journal/2026-11-02-using-your-hands/2026-11-02-using-your-hands-2.jpg",
+            "alt": "Count the hands a task takes. Page 2 of 3. A proposed development check Watch the entire task. Place the object. Note what the other hand has to hold. Choose the setting. Check whether the device needs bracing. Remove the object. Check grip changes and safe access. Record each adjustment and request for help. vh.do"
+          },
+          {
+            "src": "assets/journal/2026-11-02-using-your-hands/2026-11-02-using-your-hands-3.jpg",
+            "alt": "Count the hands a task takes. Page 3 of 3. Design requirements Design for different hands. Try the left and right hand. Vary hand size and reach. Check the force required. Keep the device stable. Our first utility is still in development. vh.do"
+          }
+        ]
+      }
+    ],
+    "publishedAt": "2026-11-02T16:40:47.690Z"
+  },
+  {
     "id": "2026-11-01-replaceable-parts",
     "slug": "2026-11-01-replaceable-parts",
     "title": "Design for the part that wears out",
