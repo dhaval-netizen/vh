@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-03-usable-output",
+    "slug": "2026-11-03-usable-output",
+    "title": "Keep the result useful without the device",
+    "body": "A file made by a device should remain useful after the device is gone.\n\nImagine a physical utility that captures an everyday measurement. If the result can only be read inside a company app, the owner still depends on that company to use it.\n\nWe would want the result to leave the device in a format other tools can open. A saved measurement also needs its units and enough context to make sense later. Exporting an unexplained number would leave part of the job unfinished.\n\nA useful development check would be to transfer the result locally, disconnect the utility, and open the file on a computer with no v/h software or account. Then check that the person can understand and reuse it.\n\nAn agent inside the product could interpret the inputs and check the result. Owning that result should not require access to the agent's internal software.\n\nFor v/h, independent ownership includes the useful output. Our first utility is in development. The measurement example is illustrative, not a product announcement.\n\nWhat's a useful result you've struggled to get out of a device you own?",
+    "date": "2026-11-03",
+    "format": "text",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7523473627564924928/",
+    "media": [],
+    "publishedAt": "2026-11-03T19:58:12.019Z"
+  },
+  {
     "id": "2026-11-02-using-your-hands",
     "slug": "2026-11-02-using-your-hands",
     "title": "Count the hands a task takes",
