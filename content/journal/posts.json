@@ -1,5 +1,22 @@
 [
   {
+    "id": "2026-11-04-first-use",
+    "slug": "2026-11-04-first-use",
+    "title": "Offline from the first use",
+    "body": "Working offline should include the first use.\n\nSuppose a utility can do its job without a connection, but only after you create an account and download its model. The setup still depends on an outside service.\n\nFor v/h, the core capability should be ready on the device when it reaches its owner. That includes the local model and the tools it needs to act and check the result.\n\nA proposed development check: take a unit in its shipped state and keep it offline from the moment it is opened. Give someone the included instructions. Can they finish the first core task without a phone, account or download?\n\nIf a physical adjustment or calibration is necessary, the device should guide it locally and make readiness clear. Record every point where the person needs outside help.\n\nAn update could improve the product later. It should not be required to make the basic job work for the first time.\n\nOur first utility is in development. This is a requirement to prove before release.",
+    "date": "2026-11-04",
+    "format": "image",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7523816224695439360/",
+    "media": [
+      {
+        "kind": "image",
+        "src": "assets/journal/2026-11-04-first-use/2026-11-04-first-use.png",
+        "alt": "An ivory poster with the fixed v/h logo and the label First use. Large Neue Montreal lettering reads Offline. in red and From the first use. in charcoal. Below a red rule are three prompts: Start in the shipped state. Keep the connection off. Complete the core task. The footer reads A design requirement, with vh.do."
+      }
+    ],
+    "publishedAt": "2026-11-04T18:39:32.105Z"
+  },
+  {
     "id": "2026-11-03-usable-output",
     "slug": "2026-11-03-usable-output",
     "title": "Keep the result useful without the device",
