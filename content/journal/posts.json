@@ -1,5 +1,16 @@
 [
   {
+    "id": "2026-11-05-temporary-choices",
+    "slug": "2026-11-05-temporary-choices",
+    "title": "A choice for this task",
+    "body": "A setting changed for one task shouldn't become a rule for every task.\n\nSuppose someone chooses a gentler setting for a delicate object. That choice tells us what they need now. It does not tell us how they want the next ordinary object handled.\n\nFor a utility that adapts, we would distinguish a temporary adjustment from a preference that holds across similar tasks. The current physical control should always take precedence over an inferred preference.\n\nA useful development check would alternate routine tasks with exceptions. Compare a version that adapts with one that keeps fixed settings. Count both the adjustments it saves and the new corrections it causes.\n\nThen change the person's routine. Check whether the device can stop relying on an old pattern without making the owner reset the whole product.\n\nAn agent under the hood should reduce the need to repeat yourself while remaining easy to correct. All of that should happen locally, through the object itself.\n\nOur first utility is in development. These are proposed checks, and the delicate-object example is illustrative.",
+    "date": "2026-11-05",
+    "format": "text",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7524176890723557377/",
+    "media": [],
+    "publishedAt": "2026-11-05T18:32:43.051Z"
+  },
+  {
     "id": "2026-11-04-first-use",
     "slug": "2026-11-04-first-use",
     "title": "Offline from the first use",
