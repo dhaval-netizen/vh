@@ -1,5 +1,35 @@
 [
   {
+    "id": "2026-11-07-enough-power",
+    "slug": "2026-11-07-enough-power",
+    "title": "Enough power to finish the job",
+    "body": "A battery indicator should help you decide whether to start the job.\n\nImagine a portable utility that moves an object and checks its final position. We would want the power budget to include the movement, the local model and the final check. Beginning the task would not be enough.\n\nA proposed development check would repeat the same task at different charge levels. We would record completed, verified jobs and every time the owner has to intervene. Then we would repeat the check with a more demanding version of the task.\n\nWhen power is too low, the device should explain the next step before starting. The feedback should relate to the task, so the owner can act without estimating the model's energy use.\n\nFor v/h, keeping the core work local includes planning for the energy needed to finish it. Readiness needs to mean something useful to the person pressing the button.\n\nOur first utility is in development. The portable device is an illustrative example, and the document describes proposed checks, not battery-life results or a product specification.",
+    "date": "2026-11-07",
+    "format": "document",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:activity:7524923633899876352/",
+    "media": [
+      {
+        "kind": "document",
+        "src": "assets/journal/2026-11-07-enough-power/2026-11-07-enough-power.pdf",
+        "alt": "Enough power to finish the job",
+        "pages": [
+          {
+            "src": "assets/journal/2026-11-07-enough-power/2026-11-07-enough-power-1.jpg",
+            "alt": "Enough power to finish the job. Page 1 of 3. Power and readiness Enough power to finish. A battery indicator should help you decide whether to start the job. Swipe for a proposed development check. An illustrative design requirement. vh.do"
+          },
+          {
+            "src": "assets/journal/2026-11-07-enough-power/2026-11-07-enough-power-2.jpg",
+            "alt": "Enough power to finish the job. Page 2 of 3. The power budget Include the whole job. Interpret. Run the sensors and local model. Act. Operate the physical mechanism. Check. Confirm the intended result. The example is a portable physical utility. vh.do"
+          },
+          {
+            "src": "assets/journal/2026-11-07-enough-power/2026-11-07-enough-power-3.jpg",
+            "alt": "Enough power to finish the job. Page 3 of 3. A proposed development check Check at different charge levels. Repeat the same task. Count completed, verified jobs. Record each request for help. When power is too low, make the next step clear before starting. Our first utility is still in development. vh.do"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-05-temporary-choices",
     "slug": "2026-11-05-temporary-choices",
     "title": "A choice for this task",
