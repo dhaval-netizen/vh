@@ -1,5 +1,15 @@
 [
   {
+    "id": "2026-11-08-sound-in-the-room",
+    "slug": "2026-11-08-sound-in-the-room",
+    "title": "Sound in a shared room",
+    "body": "If a device makes everyone pause their conversation, its job has interrupted more than its owner.\n\nImagine a tabletop utility that completes a task, then keeps a cooling fan running beside two people talking. The result is ready, but the interruption continues.\n\nFor v/h, sound belongs in the design alongside size and controls. We would assess the whole sequence: waiting, starting, working and returning to idle.\n\nOne proposed check would put the task in a shared room. Measure the sound, and also observe whether people raise their voices, move the device or put off using it. Include people who never touched the switch.\n\nThe local model has to earn its place in that room, too. If a design needs active cooling to run it, we would count the noise as part of the cost of that intelligence. A comparison should hold the useful result constant and consider both the task and the time after it ends.\n\nA product can ask very little of its owner while asking too much of everyone nearby. That belongs in our definition of ease of use.\n\nOur first utility is in development. The fan example is illustrative, and these checks are proposed.\n\nWhat device do you avoid using while someone nearby is talking or working?",
+    "date": "2026-11-08",
+    "format": "text",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:activity:7525235470310621184/",
+    "media": []
+  },
+  {
     "id": "2026-11-07-enough-power",
     "slug": "2026-11-07-enough-power",
     "title": "Enough power to finish the job",
