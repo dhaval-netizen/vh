@@ -9,6 +9,11 @@ export const pages = {
     path: 'philosophy/',
     sections: ['a-useful-purpose', 'under-the-hood', 'owning-it', 'a-familiar-feeling', 'the-first-product'],
   },
+  team: {
+    source: 'team.html',
+    path: 'team/',
+    sections: [],
+  },
 };
 
 export const routes = Object.entries(pages).flatMap(([page, definition]) => [
