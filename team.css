@@ -24,6 +24,7 @@
 .team-person:first-child{padding-top:6px;border-top:0}
 .team-person h3{font-size:clamp(36px,3.6vw,58px);line-height:1;letter-spacing:-.055em}
 .team-role{font-size:14px;color:var(--red);margin-top:14px}
+.team-portrait{display:block;width:100%;max-width:280px;height:auto;aspect-ratio:1;object-fit:cover;margin-bottom:25px;background:var(--ink)}
 .team-person-body{max-width:560px}
 .team-person-body p{font-size:16px;line-height:1.65;color:var(--muted)}
 .team-person-body p+p{margin-top:14px}

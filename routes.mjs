@@ -16,8 +16,8 @@ export const pages = {
   },
   preorder: {
     source: 'preorder.html',
-    path: 'preorder/',
-    sections: [],
+    path: 'lamp/',
+    sections: ['film'],
   },
   privacy: {
     source: 'privacy.html',

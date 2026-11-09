@@ -1,117 +1,49 @@
-# v/h pre-order Worker: setup guide
+# Lamp interest-list service
 
-This Worker stores sign-ups from the pre-order form at vh.do/preorder/. It runs on the v/h Cloudflare account, the same one as the private review Worker. Setup takes about 20 minutes.
+`POST /preorder` saves interest in the lamp. The path is retained for the existing integration; this service does not take orders, reserve inventory, charge money or send email. The frontend is `/lamp/`.
 
-Until it's deployed, the form on vh.do will show "We couldn't save your pre-order". Everywhere other than vh.do (local copies, previews) the form runs in preview mode and sends nothing.
+## Contract
 
-## What it stores
+Only `https://vh.do` and `https://www.vh.do` browser origins are accepted. Send JSON with `email` and `consent: true`. Optional `price` is empty, `under-50`, `50-100`, `100-200` or `over-200` (USD research bands). Optional `size` is empty, `small`, `medium` or `large` (bedside, desk/shelf or living-room placement). `company` is the hidden honeypot.
 
-One record per email address. A repeat sign-up updates the record and keeps the original date.
+Success is HTTP 200 with `{"ok":true}`. All replies are `no-store`. Invalid input returns 400, an oversized body 413, wrong content type 415, and excessive requests 429 with Retry-After. Temporary storage or capacity failures return 503. The browser confirms success only after reading `ok: true` and offers an idempotent retry after errors or a 15-second timeout. Local previews never send details.
 
-| Field | Example | Notes |
-|---|---|---|
-| email | jane@example.com | Lower-cased |
-| price | 50-100 | Band key in US dollar terms: under-50, 50-100, 100-200, over-200 |
-| currency | GBP | The currency the visitor saw the bands in |
-| size | medium | small, medium or large |
-| country | GB | From Cloudflare's request metadata. No IP address is stored |
-| source | vh.do/preorder | |
-| consentVersion | 2026-11-09 | Which privacy notice the person agreed to |
-| createdAt, updatedAt | ISO timestamps | |
+D1 enforces one active record per normalized email. Duplicate submissions return the same generic success without exposing membership, overwriting preferences or extending retention. This form does not verify mailbox ownership. Treat records as unverified interest; verify the address before using it for an email campaign. Do not promise inventory or order priority.
 
-## 1. Before you start
+## Storage and abuse controls
 
-- Access to the v/h Cloudflare account.
-- Node.js 18 or newer on your machine.
-- A terminal open in this folder: `workers/preorder`.
+The separate `vh-lamp-interest` database stores email, optional preferences, consent version and signup/expiry timestamps. No IP address, location, arbitrary source field or browser history is saved in it. Parameterized queries are used throughout. The native rate limiter sees a SHA-256 hash of the connecting IP and allows approximately 30 attempts per minute per Cloudflare location. Shared IPs can share this limit. Origins and the honeypot are additional checks, not authentication or complete bot protection.
 
-## 2. Log in to Cloudflare
+An atomic database check caps new records at 1,000 in a rolling 24 hours across locations. This is a capacity safeguard, not a guarantee against all abuse or provider charges. Review service capacity before a large campaign. Provider free-plan quotas still apply.
+
+Each record expires after 365 days. Exports exclude expired records immediately. A daily 04:17 UTC cron removes them. D1 recovery history can retain deleted records for up to 30 additional days. After a recovery, honor deletion requests again and run expiry cleanup before exporting. Do not create indefinite copies of contact lists.
+
+## Deploy
+
+Use Node.js 22.13 or newer for the repository tests, and Wrangler 4.36 or newer. The checked-in config identifies the existing Worker and dedicated D1 database; its IDs are not secrets. For a different account, create a separate database and replace those IDs. Do not bind this service to another application's database.
 
 ```sh
-npx wrangler login
+npm test
+npx wrangler d1 migrations apply vh-lamp-interest --remote --config workers/preorder/wrangler.toml
+npx wrangler deploy --config workers/preorder/wrangler.toml --experimental-provision=false
+npx wrangler secret put ADMIN_TOKEN --config workers/preorder/wrangler.toml
 ```
 
-## 3. Create the storage, restricted to the EU
+Use a random admin secret of at least 32 characters. Store it in a secret manager; never commit it, put it in a URL, or expose it in frontend code. Worker observability is disabled to avoid application request logs. Cloudflare still processes operational network information.
 
-```sh
-npx wrangler kv namespace create PREORDERS --jurisdiction=eu
-```
+The service is `https://vh-preorder.vh-do.workers.dev`. `GET /health` returns only the service name and health response, not database contents. Verify CORS preflight, submission, authorized export and test-record erasure before publishing the form.
 
-Copy the `id` it prints into `wrangler.toml`, replacing `REPLACE_WITH_KV_NAMESPACE_ID`.
+## Administration
 
-Do this exactly once, with `--jurisdiction=eu`. The jurisdiction can only be set when the namespace is created and cannot be added later. It keeps the stored data in EU data centres, which is what the privacy notice at vh.do/privacy/ promises. The EU is covered by UK adequacy rules, so this works for UK visitors too.
+Supply `Authorization: Bearer <ADMIN_TOKEN>` from a trusted admin tool, never a public browser page.
 
-## 4. Set the admin password
+- `GET /export` returns a CSV page of up to 500 active records. If `X-Next-Cursor` is present, request `/export?after=<cursor>` and repeat until it is absent. Concatenate rows without repeating the header. Formula-like cells are prefixed with an apostrophe for spreadsheet safety. Timestamps are Unix seconds in UTC.
+- `DELETE /preorder` with JSON `{"email":"person@example.com"}` erases that record. The email goes in the request body, never the URL. This is idempotent. Verify the requester controls the address before erasure or changes.
 
-```sh
-npx wrangler secret put ADMIN_TOKEN
-```
+For a correction, verify the address, export its current consent details privately, erase the old record and ask the person to join again. Any mailing workflow must preserve the consent purpose and provide an effective unsubscribe method. Apply unsubscribe/deletion requests before the next send. This repository does not include a campaign sender.
 
-Paste a long random string, for example the output of `openssl rand -hex 32`. Keep it in a password manager. It protects the export and delete endpoints. Never commit it.
+## Verification
 
-## 5. Deploy
+`npm test` includes the production SQL executed against SQLite through a minimal D1 adapter. It covers malformed and oversized bodies, consent, origins, native rate-limit results, duplicates, capacity, retention, admin authorization, CSV escaping, pagination, deletion and storage failures. Client transport tests use a real local HTTP server. Also inspect the live mobile menu, keyboard dialog controls, validation and success/error feedback.
 
-```sh
-npx wrangler deploy
-```
-
-Wrangler prints the Worker's URL. The page expects:
-
-```
-https://vh-preorder.vh-do.workers.dev/preorder
-```
-
-If your URL is different, change `ENDPOINT` at the top of `preorder.js` in the repo root, then run `npm run build`.
-
-**Recommended:** serve the Worker from your own domain, for example `https://api.vh.do/preorder`, in place of workers.dev. In the Cloudflare dashboard go to Workers & Pages, then vh-preorder, then Settings, then Domains & Routes, and add a custom domain. Then update `ENDPOINT` to match. This keeps all traffic on vh.do and lets you add Cloudflare security rules to it.
-
-## 6. Test it
-
-From your terminal (simulates the vh.do form):
-
-```sh
-curl -i -X POST https://vh-preorder.vh-do.workers.dev/preorder \
-  -H "Origin: https://vh.do" -H "Content-Type: application/json" \
-  -d '{"email":"test@vh.do","price":"50-100","currency":"GBP","size":"medium","source":"test"}'
-```
-
-Expect `200` and `{"ok":true}`. Then export to check it landed:
-
-```sh
-curl -H "Authorization: Bearer $ADMIN_TOKEN" https://vh-preorder.vh-do.workers.dev/export -o vh-preorders.csv
-```
-
-Delete the test record:
-
-```sh
-curl -X DELETE -H "Authorization: Bearer $ADMIN_TOKEN" "https://vh-preorder.vh-do.workers.dev/preorder?email=test@vh.do"
-```
-
-Once the site is merged and live, submit the real form on https://vh.do/preorder/ from a phone and a laptop, and check both appear in the export.
-
-## 7. Spam protection (recommended)
-
-The form has a hidden honeypot field, and the Worker only accepts requests sent from https://vh.do and https://www.vh.do. That stops casual bots, not determined ones. Before you promote the page:
-
-- Add a rate limiting rule in the Cloudflare dashboard (Security, then WAF, then Rate limiting rules): for example, 10 requests per minute per IP to `/preorder`. This needs the custom domain from step 5.
-- If spam still gets through, add Cloudflare Turnstile to the form. That is not built yet. Ask and it can be added.
-
-## Data protection: what this setup covers, and what it doesn't
-
-**Covered by the code and this setup**
-- Data minimisation: only the fields above. No IP addresses, no cookies, no analytics on the page.
-- EU storage via the KV jurisdiction (step 3).
-- Right to erasure: the `DELETE /preorder?email=` endpoint.
-- Right of access and portability: the `/export` CSV.
-- A record of which privacy notice each person agreed to (`consentVersion`).
-- A privacy notice at vh.do/privacy/, linked from the form.
-
-**Needs a person to do it**
-1. **Confirm the privacy notice.** It names "Vedh Krishnan, operating as v/h" as the controller, with vedh@vh.do as the contact, and promises deletion 12 months after the lamp goes on sale. Change it if any of that is wrong, especially if a company is formed. If you change the wording, bump `CONSENT_VERSION` in `src/index.js` and redeploy.
-2. **Cloudflare's data processing terms.** Cloudflare's Data Processing Addendum applies to customer accounts. Check it in the dashboard under Manage Account, then Configurations or Legal, and keep a copy for your records.
-3. **Answer requests within one month.** For a deletion request, run the DELETE command above and reply to confirm.
-4. **Unsubscribes.** No emails are sent by this system. When you start emailing the list from any tool (Kit, Mailchimp, Buttondown), every email needs an unsubscribe link, and you should delete unsubscribed people from KV or mark them.
-5. **Retention.** Put a reminder in the calendar for 12 months after launch to export and then delete everything still stored.
-6. **Keep the admin token private.** If it leaks, run `npx wrangler secret put ADMIN_TOKEN` again with a new value.
-
-This is a practical setup for a small pre-order list, not legal advice. If you start taking payments or the list grows large, get a short review from a privacy lawyer.
+Cloudflare references: [rate limits](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/), [D1 locations](https://developers.cloudflare.com/d1/configuration/data-location/), [recovery history](https://developers.cloudflare.com/d1/reference/time-travel/).

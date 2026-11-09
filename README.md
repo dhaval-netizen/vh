@@ -53,3 +53,9 @@ GitHub Pages publishes the root of the `main` branch. Push changes to `main` to 
 The site includes the existing Neue Montreal Regular, Medium, and Bold files. They are third-party demo/trial copies from Pangram Pangram. Their inclusion does not grant a commercial web licence. See `assets/neue-montreal-trial-license.txt` and the [foundry's licensing information](https://pangrampangram.com/products/neue-montreal).
 
 The v/h name, logo, copy, and images remain subject to their owners' rights. This repository does not grant an open-source licence for those materials or the fonts.
+
+## Lamp page and interest list
+
+The lamp concept is at `/lamp/`, with a clean `/lamp/film/` section URL and `/privacy/` notice. Edit `preorder.html`, `preorder.css` and `preorder.js`, then run the normal build. `/preorder/` redirects to `/lamp/` for old links. The page describes development requirements, not a shipping product, and takes no orders or payments.
+
+The signup service deploys separately from GitHub Pages. See [the Worker instructions](workers/preorder/README.md) and [release checks](docs/preorder-launch-checklist.md). Tests require Node.js 22.13 or newer. Team portraits in `assets/team/` are the current LinkedIn photos selected for publication by v/h, with profile links beside each biography.

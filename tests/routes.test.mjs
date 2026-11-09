@@ -84,14 +84,24 @@ test('the team page has no unconfirmed placeholders', async () => {
 });
 
 test('the pre-order and privacy pages have clean URLs', () => {
-  for (const page of ['preorder', 'privacy']) {
-    const route = resolveRoute(new URL(`/${page}/`, origin), new URL(origin));
+  for (const [page, path] of [['preorder', 'lamp'], ['privacy', 'privacy']]) {
+    const route = resolveRoute(new URL(`/${path}/`, origin), new URL(origin));
     assert.equal(route.page, page);
-    assert.equal(route.url.pathname, `/${page}/`);
+    assert.equal(route.url.pathname, `/${path}/`);
   }
 });
 
 test('the pre-order form links to the privacy notice', async () => {
   const html = await readFile(new URL('../preorder.html', import.meta.url), 'utf8');
   assert.match(html, /href="privacy\/"/);
+});
+
+test('lamp film has a clean path and old section bookmarks resolve', () => {
+  for (const path of ['/lamp/film/', '/lamp/#film']) {
+    const route = resolveRoute(new URL(path, origin), new URL(origin));
+    assert.equal(route?.page, 'preorder');
+    assert.equal(route?.target, 'film');
+    assert.equal(route?.url.pathname, '/lamp/film/');
+    assert.equal(route?.url.hash, '');
+  }
 });

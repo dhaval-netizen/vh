@@ -1,31 +1,11 @@
-# Launch film renderer
+# Lamp concept film
 
-`film.html` draws the 48-second launch film frame by frame from the same line art the pre-order page uses (`preorder-art.mjs`). Change the scenes, timings or words in the `scenes` list in `film.html`, then re-render.
+The 24-second silent animation uses the contributor's original SVG lamp and room drawings. It illustrates an idea; it is not footage of a working prototype. The disclosure remains visible throughout. The end card uses the existing logo asset and invites viewers to follow development, without taking orders.
 
-## Re-render
-
-You need Python with Playwright (`pip install playwright`, then `playwright install chromium`) and ffmpeg.
-
-1. Serve the repo root: `python3 -m http.server 8765`
-2. Capture frames at 24 fps into a folder outside the repo:
-
-```python
-from playwright.sync_api import sync_playwright
-with sync_playwright() as p:
-    page = p.chromium.launch().new_page(viewport={'width': 1280, 'height': 720})
-    page.goto('http://localhost:8765/scripts/film/film.html')
-    page.wait_for_function('window.ready === true')
-    film = page.locator('#film')
-    for i in range(int(page.evaluate('window.DURATION') * 24)):
-        page.evaluate(f'window.renderFrame({i / 24})')
-        film.screenshot(path=f'/tmp/frames/f{i:04d}.png')
-```
-
-3. Encode:
+To render, install CairoSVG, fonttools and Pillow in a Python environment and have Node.js and ffmpeg available. From the repository root:
 
 ```sh
-ffmpeg -framerate 24 -i /tmp/frames/f%04d.png -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p -movflags +faststart assets/preorder/vh-lamp-film.mp4
-ffmpeg -i /tmp/frames/f0828.png -q:v 3 assets/preorder/vh-lamp-film-poster.jpg
+python scripts/film/render.py --proof-dir /tmp/vh-film-proof
 ```
 
-Frame 828 (34.5 seconds, "Sit down. It's on.") is the poster.
+`frames.mjs` defines the scene timing and captions. `render.py` outlines the actual Neue Montreal glyphs, renders frames and writes the MP4 and JPEG poster to `assets/preorder/`. Inspect the three proof frames and play the resulting video before publishing. The page includes a written description of the film.
