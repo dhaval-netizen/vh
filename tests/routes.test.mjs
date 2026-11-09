@@ -82,3 +82,16 @@ test('the team page has no unconfirmed placeholders', async () => {
   const html = await readFile(new URL('../team.html', import.meta.url), 'utf8');
   assert.doesNotMatch(html, /TBC|NEEDED/, 'Replace every [ROLE NEEDED] placeholder in team.html before publishing');
 });
+
+test('the pre-order and privacy pages have clean URLs', () => {
+  for (const page of ['preorder', 'privacy']) {
+    const route = resolveRoute(new URL(`/${page}/`, origin), new URL(origin));
+    assert.equal(route.page, page);
+    assert.equal(route.url.pathname, `/${page}/`);
+  }
+});
+
+test('the pre-order form links to the privacy notice', async () => {
+  const html = await readFile(new URL('../preorder.html', import.meta.url), 'utf8');
+  assert.match(html, /href="privacy\/"/);
+});
