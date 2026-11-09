@@ -1,5 +1,21 @@
 [
   {
+    "id": "2026-11-09-one-request",
+    "slug": "2026-11-09-one-request",
+    "title": "A press needs a response",
+    "body": "You shouldn't have to press Start twice to find out whether the first press worked.\n\nImagine a device that needs a moment to prepare its local model. If it gives no feedback, someone may press Start again. When preparation finishes, both requests could run.\n\nFor v/h, accepting the request and completing the task need separate, clear feedback. The control should acknowledge a press promptly. During preparation, another press on Start should not silently add another job.\n\nOne proposed check would deliberately delay preparation, then ask someone to use the device without coaching. We would record repeated presses, duplicate actions and uncertainty about what the device is doing.\n\nWe would also check what happens if the person changes their mind during the delay. Stop should cancel the pending work. Becoming ready later should not revive the cancelled request.\n\nThe local agent can interpret and carry out the task once it is ready. The owner shouldn't have to understand its startup sequence to use a familiar control.\n\nOur first utility is in development. The delayed-start example is illustrative, and these are requirements to prove.",
+    "date": "2026-11-09",
+    "format": "image",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:activity:7525597461453656064/",
+    "media": [
+      {
+        "kind": "image",
+        "src": "assets/journal/2026-11-09-one-request/2026-11-09-one-request.png",
+        "alt": "An ivory v/h poster with the fixed logo and the heading A press needs a response. A red panel labelled Starting says Request accepted. An arrow leads to a charcoal panel labelled Finished that says Result checked. Below, the text reads Repeated presses should not silently queue more work. The footer says Illustrative feedback. A design requirement. and vh.do."
+      }
+    ]
+  },
+  {
     "id": "2026-11-08-sound-in-the-room",
     "slug": "2026-11-08-sound-in-the-room",
     "title": "Sound in a shared room",
