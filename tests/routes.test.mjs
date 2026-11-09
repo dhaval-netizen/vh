@@ -69,3 +69,16 @@ test('nested static entries resolve styles, fonts and home links at the site roo
   assert.match(file, /id="owning-it"/);
   assert.match(file, /href="https:\/\/vh\.do\/philosophy\/"/);
 });
+
+test('the team page has a clean URL', () => {
+  const route = resolveRoute(new URL('/team/', origin), new URL(origin));
+  assert.equal(route.page, 'team');
+  assert.equal(route.target, 'top');
+  assert.equal(route.url.pathname, '/team/');
+});
+
+// Guard: the team page ships with placeholders until all three people are confirmed.
+test('the team page has no unconfirmed placeholders', async () => {
+  const html = await readFile(new URL('../team.html', import.meta.url), 'utf8');
+  assert.doesNotMatch(html, /TBC|NEEDED/, 'Replace every [ROLE NEEDED] placeholder in team.html before publishing');
+});

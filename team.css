@@ -1,0 +1,44 @@
+/* Team page. Uses the v/h tokens from styles.css: --paper, --ink, --muted, --line, --red. */
+.team-main{max-width:1440px;padding-bottom:120px}
+
+/* Hero: the three names, split by the v/h slash. The one bold moment on the page. */
+.team-hero{padding:90px 0 70px;border-bottom:1px solid var(--line)}
+.team-names{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 .12em;font-size:clamp(64px,11.2vw,200px);line-height:.92;letter-spacing:-.075em;font-weight:500;margin-left:-.05em}
+.team-slash{color:var(--red);font-weight:400;letter-spacing:0;padding:0 .02em}
+.team-hero-line{font-size:clamp(24px,2.4vw,38px);line-height:1.15;letter-spacing:-.035em;margin-top:44px;max-width:520px}
+
+/* Shared two column rhythm: small heading left, content right. */
+.team-why,.team-people{display:grid;grid-template-columns:minmax(160px,1fr) 3fr;gap:60px;padding:90px 0;border-bottom:1px solid var(--line)}
+.team-why h2,.team-people h2,.team-test-label{font-size:13px;line-height:1.4;letter-spacing:0;font-weight:500;color:var(--muted);padding-top:10px}
+
+.team-why-copy{max-width:680px}
+.team-why-copy p{font-size:18px;line-height:1.7}
+.team-why-copy p+p{margin-top:20px}
+.team-why-copy .team-lead{font-size:clamp(28px,2.8vw,44px);line-height:1.15;letter-spacing:-.04em}
+.team-why-copy .team-lead+p{margin-top:34px}
+.team-question{margin:44px 0;padding-left:26px;border-left:2px solid var(--red);font-size:clamp(26px,2.4vw,38px);line-height:1.2;letter-spacing:-.035em}
+
+/* People: rows, not cards. Name and role on the left, what they bring on the right. */
+.team-list{list-style:none;margin:0;padding:0}
+.team-person{display:grid;grid-template-columns:1fr 1.35fr;gap:40px;padding:38px 0 42px;border-top:1px solid var(--ink)}
+.team-person:first-child{padding-top:6px;border-top:0}
+.team-person h3{font-size:clamp(36px,3.6vw,58px);line-height:1;letter-spacing:-.055em}
+.team-role{font-size:14px;color:var(--red);margin-top:14px}
+.team-person-body{max-width:560px}
+.team-person-body p{font-size:16px;line-height:1.65;color:var(--muted)}
+.team-person-body p+p{margin-top:14px}
+.team-person-body .team-brings{font-size:clamp(21px,1.8vw,26px);line-height:1.25;letter-spacing:-.03em;color:var(--ink);margin-bottom:18px}
+.team-link{display:inline-block;font-size:13px;margin-top:22px;border-bottom:1px solid var(--ink);padding-bottom:6px}
+.team-link span{margin-left:10px}
+.team-link:hover{color:var(--red);border-color:var(--red)}
+
+/* Closing test line. */
+.team-test{padding:100px 0 0}
+.team-test-label{padding-top:0}
+.team-test-line{font-size:clamp(48px,6.4vw,112px);line-height:.98;letter-spacing:-.065em;font-weight:500;max-width:1100px;margin-top:28px}
+.team-test-note{font-size:17px;line-height:1.6;max-width:520px;margin-top:40px;color:var(--muted)}
+.team-links{display:flex;flex-wrap:wrap;gap:8px 36px}
+
+@media(max-width:1100px){.team-why,.team-people{grid-template-columns:1fr 4fr;gap:40px}.team-person{grid-template-columns:1fr;gap:20px}}
+@media(max-width:760px){.team-hero{padding:56px 0 48px}.team-names{flex-direction:column;align-items:flex-start;gap:0;font-size:clamp(72px,21vw,140px)}.team-slash{line-height:.7;font-size:.6em;padding:0}.team-why,.team-people{grid-template-columns:1fr;gap:24px;padding:60px 0}.team-why h2,.team-people h2{padding-top:0}.team-test{padding-top:64px}}
+@media print{.team-names{font-size:44pt}.team-why,.team-people,.team-person{display:block;padding:20px 0}}
