@@ -163,3 +163,5 @@ details[open] .disclosure-mark:after{transform:rotate(0)}
 }
 @media(prefers-reduced-motion:reduce){button.agent-step,.disclosure-mark:after{transition:none}}
 @media print{.questions{display:block}.questions-intro{margin-bottom:30px}.questions-list details::details-content{display:block}.answer{display:block}.agent-invitation{display:none}}
+/* Keep all five primary destinations visible on small tablets. */
+@media(min-width:541px) and (max-width:760px){.site-header .header-descriptor{display:none}.site-header .navigation{display:flex;gap:18px}.site-header .navigation a{display:block}}

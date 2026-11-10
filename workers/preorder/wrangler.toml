@@ -1,0 +1,23 @@
+name = "vh-preorder"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+account_id = "f5ac49ce8a9d47cd5075133745156169"
+workers_dev = true
+preview_urls = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vh-lamp-interest"
+database_id = "86a2dcc0-7eef-49fd-ae6a-5ebbae50ecc7"
+migrations_dir = "migrations"
+
+[[ratelimits]]
+name = "WRITE_LIMITER"
+namespace_id = "711092026"
+simple = { limit = 30, period = 60 }
+
+[triggers]
+crons = ["17 4 * * *"]
+
+[observability]
+enabled = false

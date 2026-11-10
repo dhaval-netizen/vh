@@ -14,6 +14,16 @@ export const pages = {
     path: 'team/',
     sections: [],
   },
+  preorder: {
+    source: 'preorder.html',
+    path: 'lamp/',
+    sections: ['film'],
+  },
+  privacy: {
+    source: 'privacy.html',
+    path: 'privacy/',
+    sections: [],
+  },
 };
 
 export const routes = Object.entries(pages).flatMap(([page, definition]) => [

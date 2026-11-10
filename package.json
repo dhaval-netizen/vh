@@ -5,5 +5,8 @@
     "sync:linkedin": "node scripts/sync-linkedin.mjs",
     "build": "node scripts/build-routes.mjs && node scripts/build-journal.mjs",
     "test": "node --test && node scripts/build-routes.mjs --check && node scripts/build-journal.mjs --check"
+  },
+  "engines": {
+    "node": ">=22.13.0"
   }
 }
