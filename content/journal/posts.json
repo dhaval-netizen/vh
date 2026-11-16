@@ -1,5 +1,35 @@
 [
   {
+    "id": "2026-11-16-room-for-the-job",
+    "slug": "2026-11-16-room-for-the-job",
+    "title": "Measure the space the job needs",
+    "body": "A small device can still take over a countertop.\n\nImagine a compact utility with a lid that opens backwards. It fits on a shallow shelf when closed, but using it means pulling it forward and moving whatever is beside it.\n\nAn early size check should include the space needed to load it, reach the controls, remove the result and route the cable. Any required ventilation clearance belongs in that measurement too.\n\nA proposed prototype check would use ordinary locations with their other objects left in place. Record what the person has to move, whether they can complete the job comfortably, and what space remains usable afterwards. Repeat with the tool or routine the person uses today.\n\nFor v/h, adding a local model, sensors and cooling must earn the room they occupy. The better result should still be available where the owner actually needs it.\n\nOur first utility is in development. The devices described and drawn are illustrative, and the document describes proposed checks.",
+    "date": "2026-11-16",
+    "format": "document",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7528134266862424064/",
+    "media": [
+      {
+        "kind": "document",
+        "src": "assets/journal/2026-11-16-room-for-the-job/2026-11-16-room-for-the-job.pdf",
+        "alt": "Measure the space the job needs",
+        "pages": [
+          {
+            "src": "assets/journal/2026-11-16-room-for-the-job/2026-11-16-room-for-the-job-1.jpg",
+            "alt": "Measure the space the job needs. Page 1 of 3. Designing for everyday spaces Measure the space the job needs. Include loading, controls, the cable and any required clearance. Swipe for a proposed development check. Our first utility is in development. vh.do"
+          },
+          {
+            "src": "assets/journal/2026-11-16-room-for-the-job/2026-11-16-room-for-the-job-2.jpg",
+            "alt": "Measure the space the job needs. Page 2 of 3. An illustrative layout Leave room to use the device. Cable and plug Device Reach controls Load and remove Include any required ventilation clearance. Illustration only. No product dimensions. vh.do"
+          },
+          {
+            "src": "assets/journal/2026-11-16-room-for-the-job/2026-11-16-room-for-the-job-3.jpg",
+            "alt": "Measure the space the job needs. Page 3 of 3. A proposed development check Try it where it will be used. Leave nearby objects in place. Record what must be moved. Compare with the current routine. Include setup, use and putting it away. Our first utility is in development. vh.do"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-12-between-tasks",
     "slug": "2026-11-12-between-tasks",
     "title": "Test the time between tasks",
