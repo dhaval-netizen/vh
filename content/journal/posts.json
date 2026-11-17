@@ -1,5 +1,15 @@
 [
   {
+    "id": "2026-11-17-repeated-help",
+    "slug": "2026-11-17-repeated-help",
+    "title": "Check who keeps needing help",
+    "body": "An everyday utility can work most of the time and still fail the same person every day.\n\nDuring development, we would record completed jobs and the help needed for each person's repeated uses. We would then check whether the same difficulty keeps returning for the same people.\n\nSomeone might learn to place every object at a precise angle to make a prototype work. Their later attempts could look more successful while the product still depends on that extra care.\n\nA proposed comparison would ask those people to repeat the same task after a design change. Count the adjustments alongside the quality of the result, and compare the effort with their current routine.\n\nFor v/h, the local agent should help handle ordinary variation in its inputs. The housing and controls have to support that goal too. A better average is incomplete evidence if the same people still have to do the difficult part.\n\nOur first utility is in development. The placement example is illustrative, and these are proposed checks, not findings from user trials.",
+    "date": "2026-11-17",
+    "format": "text",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7528547031934533634/",
+    "media": []
+  },
+  {
     "id": "2026-11-16-room-for-the-job",
     "slug": "2026-11-16-room-for-the-job",
     "title": "Measure the space the job needs",
