@@ -1,5 +1,15 @@
 [
   {
+    "id": "2026-11-19-visible-limits",
+    "slug": "2026-11-19-visible-limits",
+    "title": "Make the working limits visible",
+    "body": "People should be able to tell what fits before a device takes hold of it.\n\nImagine a utility with a slot wide enough to accept an object that is too thick for the mechanism inside. The owner discovers the limit only after the object is partly drawn in.\n\nA better loading area would make the supported thickness apparent before the mechanism takes hold. A guide, a visible boundary or a clear local check should help the owner decide whether to proceed.\n\nDuring development, we would try objects just inside and just outside the intended range. We would check whether people can recognize the limit, and whether an unsuitable object stays easy to remove.\n\nFor v/h, the local agent should handle useful variation within the device's physical limits. The limits should be understandable through the object itself, without searching an app or learning how the model works.\n\nOur first utility is in development. The slot example is illustrative, and these are proposed design checks.",
+    "date": "2026-11-19",
+    "format": "text",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7529303695826665472/",
+    "media": []
+  },
+  {
     "id": "2026-11-18-upkeep-with-a-reason",
     "slug": "2026-11-18-upkeep-with-a-reason",
     "title": "Give upkeep a reason",
