@@ -1,5 +1,21 @@
 [
   {
+    "id": "2026-11-18-upkeep-with-a-reason",
+    "slug": "2026-11-18-upkeep-with-a-reason",
+    "title": "Give upkeep a reason",
+    "body": "A maintenance reminder creates a task for the owner. It should have a reason.\n\nImagine a device that asks for cleaning after a fixed number of uses. A light task and a messy task add the same count, even when they leave a part in different conditions.\n\nWhere the condition can be checked reliably, we would want the device to use that evidence. Where it cannot, the message should ask the owner to inspect a named part rather than claim a fault.\n\nA local agent could compare current inputs with feedback from the job. Any request for help should have an instruction the owner can follow on the object itself.\n\nDuring development, we would compare reminders with direct inspections. Count both unnecessary cleaning requests and missed cleaning needs, then check whether the advised action restores readiness.\n\nOur first utility is in development. The example and graphic illustrate a proposed upkeep requirement.",
+    "date": "2026-11-18",
+    "format": "image",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7529035003398299648/",
+    "media": [
+      {
+        "kind": "image",
+        "src": "assets/journal/2026-11-18-upkeep-with-a-reason/2026-11-18-upkeep-with-a-reason.png",
+        "alt": "An ivory v/h poster with the fixed red logo and the headline Upkeep should have a reason. Under Same number of uses, two circular mesh diagrams show a clear surface and one with red debris. They are labeled Clear and Needs cleaning. A red line stands beside the instruction Check the condition. The footer says Illustrative parts. Proposed design requirement."
+      }
+    ]
+  },
+  {
     "id": "2026-11-17-repeated-help",
     "slug": "2026-11-17-repeated-help",
     "title": "Check who keeps needing help",
