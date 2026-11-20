@@ -1,5 +1,35 @@
 [
   {
+    "id": "2026-11-20-required-purchases",
+    "slug": "2026-11-20-required-purchases",
+    "title": "Count what comes with the purchase",
+    "body": "Count what the owner has to buy besides the device.\n\nImagine a utility that works with household containers. If it only accepts a container sold by its maker, the owner may have to replace items that still do their job.\n\nOur starting requirement would be to work with suitable items people already own. A local agent could help handle differences in shape or placement, but it cannot remove a physical requirement for a seal, a material or a secure fit.\n\nSometimes a matched part is necessary. Then its purpose, purchase price, replacement needs and future availability belong in the design decision.\n\nA useful development check: list every required purchase beside the device. For each one, ask what makes it necessary and whether the same result could be achieved with something the owner already has.\n\nOur first utility is in development. The container example is illustrative. These are design requirements to establish, not compatibility claims.",
+    "date": "2026-11-20",
+    "format": "document",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7529584136097886208/",
+    "media": [
+      {
+        "kind": "document",
+        "src": "assets/journal/2026-11-20-required-purchases/2026-11-20-required-purchases.pdf",
+        "alt": "Count what comes with the purchase",
+        "pages": [
+          {
+            "src": "assets/journal/2026-11-20-required-purchases/2026-11-20-required-purchases-1.jpg",
+            "alt": "Count what comes with the purchase. Page 1 of 3. The cost of owning a utility What else must you buy? Count every required purchase beside the device itself. A proposed design check. Our first utility is in development. vh.do"
+          },
+          {
+            "src": "assets/journal/2026-11-20-required-purchases/2026-11-20-required-purchases-2.jpg",
+            "alt": "Count what comes with the purchase. Page 2 of 3. An illustrative container example Start with what people already own. Work with suitable existing items. Establish which sizes, materials and conditions the task can handle. Illustration only. No compatibility claims. vh.do"
+          },
+          {
+            "src": "assets/journal/2026-11-20-required-purchases/2026-11-20-required-purchases-3.jpg",
+            "alt": "Count what comes with the purchase. Page 3 of 3. If a special part is required Give it a reason. What function depends on it? What will the owner need to buy? How will they replace it later? Include the part's cost and availability in the product decision. Design requirements to establish. vh.do"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-11-19-visible-limits",
     "slug": "2026-11-19-visible-limits",
     "title": "Make the working limits visible",
