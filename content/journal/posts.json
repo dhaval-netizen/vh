@@ -1,5 +1,15 @@
 [
   {
+    "id": "2026-11-21-time-to-step-away",
+    "slug": "2026-11-21-time-to-step-away",
+    "title": "Count the time people must stay available",
+    "body": "A device can do the work and still keep you waiting beside it.\n\nImagine a utility that pauses halfway through a job to ask for a choice it could have collected at the start. Answering takes a moment, but the owner has to keep track of when to return.\n\nWe would want the starting controls to collect foreseeable choices. A local agent should use the available inputs to plan the job before acting. If new conditions require help, the device should pause safely and make the unfinished state clear.\n\nWhen a task can safely run without supervision, the person should be free to get on with something else. A development check should record how long they must remain available, alongside how long the device takes to finish.\n\nOur first utility is in development. The example describes a proposed design requirement.\n\nWhich everyday device keeps you waiting for a decision you could have made at the start?",
+    "date": "2026-11-21",
+    "format": "text",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7529945005390749696/",
+    "media": []
+  },
+  {
     "id": "2026-11-20-required-purchases",
     "slug": "2026-11-20-required-purchases",
     "title": "Count what comes with the purchase",
