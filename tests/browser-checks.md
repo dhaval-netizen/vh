@@ -14,3 +14,5 @@ Run these checks against a static preview after `npm run build` and `npm test`.
 - Command-click a section link. It must open a separate tab without changing the original tab's address.
 
 Chrome verification on 2026-10-19 covered all ten checks. A review caught the changing document base after history navigation; the original failing second-link result was `/vh/idea/approach/`. Freezing the document base corrected it to `/vh/approach/`.
+
+- At the bottom of the home page, click every footer link at 1440px, 820px and 390px wide. Section links scroll to their section; other links open their page. (The oversized footer wordmark once covered these links.)
