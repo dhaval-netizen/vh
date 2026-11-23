@@ -1,5 +1,21 @@
 [
   {
+    "id": "2026-11-22-ready-again",
+    "slug": "2026-11-22-ready-again",
+    "title": "Measure the wait between jobs",
+    "body": "A device that finishes quickly can still make the next job wait.\n\nImagine a utility that handles one item well, then needs a cooling pause before it can handle another. A demonstration with a single item would leave out the wait that matters when several need attention together.\n\nWe would test a run of tasks at the pace people need them. Record the quality of each result and the time until the device is ready again. Any cooling, reset or refill time belongs in the comparison with the current routine.\n\nFor v/h, the local model and the mechanism must fit the same pattern of use. The device should check its readiness and make a required wait clear through its own controls and feedback.\n\nOur first utility is in development. The example and diagram describe a proposed development check, not measured performance.",
+    "date": "2026-11-22",
+    "format": "image",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7530445129216692224/",
+    "media": [
+      {
+        "kind": "image",
+        "src": "assets/journal/2026-11-22-ready-again/2026-11-22-ready-again.png",
+        "alt": "A charcoal v/h poster with the fixed ivory logo and the headline Measure the wait between jobs. An unscaled red arrow connects two ivory marks labeled Job done and Ready again. Below it are Time until next use, Include any cooling, reset or refill, and Try the next job when it is needed. The footer reads Illustrative sequence. No timing data."
+      }
+    ]
+  },
+  {
     "id": "2026-11-21-time-to-step-away",
     "slug": "2026-11-21-time-to-step-away",
     "title": "Count the time people must stay available",
