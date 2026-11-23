@@ -16,6 +16,9 @@ function showShare(ref) {
   const link = `https://vh.do/lamp/?r=${ref}`;
   const input = share.querySelector('.po-share-link');
   const copy = share.querySelector('.po-share-copy');
+  // The panel sits inside the form, and the form is reset after success. Setting the
+  // default value keeps the link visible through that reset.
+  input.defaultValue = link;
   input.value = link;
   share.hidden = false;
   copy.addEventListener('click', async () => {
