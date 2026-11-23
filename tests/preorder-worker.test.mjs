@@ -7,7 +7,7 @@ import worker from '../workers/preorder/src/index.js';
 // Execute the production SQL against SQLite. Only the Cloudflare binding API is adapted.
 function fixture(t, limited = false) {
   const sqlite = new DatabaseSync(':memory:');
-  sqlite.exec(readFileSync(new URL('../workers/preorder/migrations/0001_signups.sql', import.meta.url), 'utf8'));
+  for (const file of ['0001_signups.sql', '0002_country_referral.sql']) sqlite.exec(readFileSync(new URL(`../workers/preorder/migrations/${file}`, import.meta.url), 'utf8'));
   t.after(() => sqlite.close());
   const DB = { prepare(sql) {
     const statement = sqlite.prepare(sql);
@@ -146,4 +146,53 @@ test('storage failure produces a retryable response without exposing internals',
   const res = await worker.fetch(request(valid), env);
   assert.equal(res.status, 503);
   assert.doesNotMatch(await res.text(), /SQL|table|stack/i);
+});
+
+const REF_SECRET = 'referral-secret-with-at-least-32-chars';
+const withCountry = (req, country) => Object.defineProperty(req, 'cf', { value: { country } });
+test('stores country only from Cloudflare and never from the request body', async t => {
+  const { env, sqlite } = fixture(t);
+  await worker.fetch(withCountry(request({ ...valid, country: 'US' }), 'GB'), env);
+  await worker.fetch(withCountry(request({ ...valid, email: 'b@example.com' }), 'not-a-country'), env);
+  assert.deepEqual(sqlite.prepare('SELECT country FROM signups ORDER BY id').all().map(r => r.country), ['GB', '']);
+});
+test('issues a stable referral code, identical for repeat signups', async t => {
+  const { env, sqlite } = fixture(t);
+  env.REF_SECRET = REF_SECRET;
+  const first = await (await worker.fetch(request(valid), env)).json();
+  const again = await (await worker.fetch(request({ ...valid, email: ' READER@example.com ' }), env)).json();
+  assert.match(first.ref, /^[a-z2-7]{10}$/);
+  assert.equal(again.ref, first.ref);
+  assert.deepEqual(Object.keys(again), ['ok', 'ref']);
+  assert.equal(sqlite.prepare('SELECT ref_code FROM signups').get().ref_code, first.ref);
+});
+test('records who referred a signup and counts it in the export', async t => {
+  const { env } = fixture(t);
+  env.REF_SECRET = REF_SECRET;
+  const { ref } = await (await worker.fetch(request(valid), env)).json();
+  await worker.fetch(request({ ...valid, email: 'friend@example.com', ref }), env);
+  await worker.fetch(request({ ...valid, email: 'other@example.com', ref }), env);
+  const csv = await (await worker.fetch(admin(env), env)).text();
+  const [header, inviter, friend] = csv.trim().split('\r\n').map(line => line.split(','));
+  assert.equal(inviter[header.indexOf('"referrals"')], '"2"');
+  assert.equal(friend[header.indexOf('"referred_by"')], `"${ref}"`);
+});
+test('ignores broken and self referral links without blocking the signup', async t => {
+  const { env, sqlite } = fixture(t);
+  env.REF_SECRET = REF_SECRET;
+  const { ref } = await (await worker.fetch(request({ ...valid, email: 'self@example.com' }), env)).json();
+  sqlite.exec('DELETE FROM signups');
+  for (const bad of [ref, 'DROP TABLE', 7, 'abc']) {
+    const res = await worker.fetch(request({ ...valid, email: 'self@example.com', ref: bad }), env);
+    assert.equal(res.status, 200);
+    assert.equal(sqlite.prepare('SELECT referred_by FROM signups').get().referred_by, '');
+    sqlite.exec('DELETE FROM signups');
+  }
+});
+test('a repeat signup cannot change who gets referral credit', async t => {
+  const { env, sqlite } = fixture(t);
+  env.REF_SECRET = REF_SECRET;
+  await worker.fetch(request(valid), env);
+  await worker.fetch(request({ ...valid, ref: 'aaaaaaaaaa' }), env);
+  assert.equal(sqlite.prepare('SELECT referred_by FROM signups').get().referred_by, '');
 });

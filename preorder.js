@@ -7,6 +7,24 @@ const error = dialog.querySelector('.po-error');
 const submit = form.querySelector('.po-submit');
 const fields = form.elements;
 let opener, submitting = false, complete = false;
+// Referral code from a shared link (vh.do/lamp/?r=code). Invalid codes are dropped.
+const REF_PATTERN = /^[a-z2-7]{10}$/;
+const incomingRef = (() => { const r = new URLSearchParams(location.search).get('r') || ''; return REF_PATTERN.test(r) ? r : ''; })();
+function showShare(ref) {
+  const share = dialog.querySelector('.po-share');
+  if (!share || !REF_PATTERN.test(ref)) return;
+  const link = `https://vh.do/lamp/?r=${ref}`;
+  const input = share.querySelector('.po-share-link');
+  const copy = share.querySelector('.po-share-copy');
+  input.value = link;
+  share.hidden = false;
+  copy.addEventListener('click', async () => {
+    try {
+      if (navigator.share && matchMedia('(pointer: coarse)').matches) await navigator.share({ title: 'The v/h lamp', url: link });
+      else { await navigator.clipboard.writeText(link); copy.textContent = 'Copied'; }
+    } catch { input.select(); }
+  });
+}
 if (!LIVE) dialog.querySelector('.po-preview-note').hidden = false;
 
 for (const button of document.querySelectorAll('[data-open-preorder]')) {
@@ -31,9 +49,9 @@ form.addEventListener('submit', async event => {
   error.hidden = true;
   submitting = true; submit.disabled = true; submit.textContent = 'Joining…';
   form.setAttribute('aria-busy', 'true');
-  const data = { email: fields.email.value.trim(), consent: fields.consent.checked, price: fields.price.value || '', size: fields.size.value || '', company: fields.company.value };
+  const data = { email: fields.email.value.trim(), consent: fields.consent.checked, price: fields.price.value || '', size: fields.size.value || '', company: fields.company.value, ...(incomingRef ? { ref: incomingRef } : {}) };
   try {
-    if (LIVE) await submitInterest(ENDPOINT, data);
+    if (LIVE) showShare((await submitInterest(ENDPOINT, data)).ref);
     else {
       dialog.querySelector('.po-done h2').textContent = 'Preview complete.';
       dialog.querySelector('.po-done-message').textContent = 'Nothing was saved or sent. The live interest list is on vh.do.';

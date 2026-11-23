@@ -127,3 +127,12 @@
 
 @media(max-width:760px){.po-form{padding:42px 24px 28px}}
 @media(max-width:540px){.po-sizes{grid-template-columns:1fr}.po-form h2{font-size:36px}}
+
+.po-share{margin-top:26px;padding-top:22px;border-top:1px solid #d6d5cc}
+.po-share p{margin-top:0!important}
+.po-share-row{display:flex;gap:10px;margin-top:14px}
+.po-share-link{flex:1;min-width:0;font:inherit;font-size:15px;padding:14px;border:1px solid #94958b;background:transparent;color:var(--ink)}
+.po-share-link:focus{outline:2px solid var(--red);outline-offset:2px}
+.po-done .po-share-copy{margin-top:0;white-space:nowrap}
+.po-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media(max-width:540px){.po-share-row{flex-direction:column}}
