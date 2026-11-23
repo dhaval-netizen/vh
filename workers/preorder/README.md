@@ -4,15 +4,17 @@
 
 ## Contract
 
-Only `https://vh.do` and `https://www.vh.do` browser origins are accepted. Send JSON with `email` and `consent: true`. Optional `price` is empty, `under-50`, `50-100`, `100-200` or `over-200` (USD research bands). Optional `size` is empty, `small`, `medium` or `large` (bedside, desk/shelf or living-room placement). `company` is the hidden honeypot.
+Only `https://vh.do` and `https://www.vh.do` browser origins are accepted. Send JSON with `email` and `consent: true`. Optional `price` is empty, `under-50`, `50-100`, `100-200` or `over-200` (USD research bands). Optional `size` is empty, `small`, `medium` or `large` (bedside, desk/shelf or living-room placement). `company` is the hidden honeypot. Optional `ref` is a 10-character referral code from a shared link (`vh.do/lamp/?r=code`); an invalid or self referral is ignored, never rejected.
 
-Success is HTTP 200 with `{"ok":true}`. All replies are `no-store`. Invalid input returns 400, an oversized body 413, wrong content type 415, and excessive requests 429 with Retry-After. Temporary storage or capacity failures return 503. The browser confirms success only after reading `ok: true` and offers an idempotent retry after errors or a 15-second timeout. Local previews never send details.
+Success is HTTP 200 with `{"ok":true}`, plus `"ref"` (the person's own referral code) when `REF_SECRET` is set. All replies are `no-store`. Invalid input returns 400, an oversized body 413, wrong content type 415, and excessive requests 429 with Retry-After. Temporary storage or capacity failures return 503. The browser confirms success only after reading `ok: true` and offers an idempotent retry after errors or a 15-second timeout. Local previews never send details.
 
 D1 enforces one active record per normalized email. Duplicate submissions return the same generic success without exposing membership, overwriting preferences or extending retention. This form does not verify mailbox ownership. Treat records as unverified interest; verify the address before using it for an email campaign. Do not promise inventory or order priority.
 
 ## Storage and abuse controls
 
-The separate `vh-lamp-interest` database stores email, optional preferences, consent version and signup/expiry timestamps. No IP address, location, arbitrary source field or browser history is saved in it. Parameterized queries are used throughout. The native rate limiter sees a SHA-256 hash of the connecting IP and allows approximately 30 attempts per minute per Cloudflare location. Shared IPs can share this limit. Origins and the honeypot are additional checks, not authentication or complete bot protection.
+The separate `vh-lamp-interest` database stores email, optional preferences, consent version and signup/expiry timestamps. Since migration 0002 it also stores the two-letter country from Cloudflare's `request.cf.country` (never from the request body), the person's own referral code and the code that referred them. No IP address, precise location, arbitrary source field or browser history is saved in it.
+
+The referral code is an HMAC-SHA256 of the normalized email with `REF_SECRET`, base32, 10 characters. A repeat signup gets the same code back without a lookup, so replies stay identical for new and existing members. The first signup's referrer is kept; a repeat cannot move credit. Rotating `REF_SECRET` breaks existing share links, so set it once. Parameterized queries are used throughout. The native rate limiter sees a SHA-256 hash of the connecting IP and allows approximately 30 attempts per minute per Cloudflare location. Shared IPs can share this limit. Origins and the honeypot are additional checks, not authentication or complete bot protection.
 
 An atomic database check caps new records at 1,000 in a rolling 24 hours across locations. This is a capacity safeguard, not a guarantee against all abuse or provider charges. Review service capacity before a large campaign. Provider free-plan quotas still apply.
 
@@ -27,7 +29,10 @@ npm test
 npx wrangler d1 migrations apply vh-lamp-interest --remote --config workers/preorder/wrangler.toml
 npx wrangler deploy --config workers/preorder/wrangler.toml --experimental-provision=false
 npx wrangler secret put ADMIN_TOKEN --config workers/preorder/wrangler.toml
+npx wrangler secret put REF_SECRET --config workers/preorder/wrangler.toml
 ```
+
+Apply the migration before deploying the code that writes the new columns. `REF_SECRET` is a random value of at least 32 characters; without it the service still works but issues no share links.
 
 Use a random admin secret of at least 32 characters. Store it in a secret manager; never commit it, put it in a URL, or expose it in frontend code. Worker observability is disabled to avoid application request logs. Cloudflare still processes operational network information.
 
@@ -37,7 +42,7 @@ The service is `https://vh-preorder.vh-do.workers.dev`. `GET /health` returns on
 
 Supply `Authorization: Bearer <ADMIN_TOKEN>` from a trusted admin tool, never a public browser page.
 
-- `GET /export` returns a CSV page of up to 500 active records. If `X-Next-Cursor` is present, request `/export?after=<cursor>` and repeat until it is absent. Concatenate rows without repeating the header. Formula-like cells are prefixed with an apostrophe for spreadsheet safety. Timestamps are Unix seconds in UTC.
+- `GET /export` returns columns email, price, size, country, ref_code, referred_by, referrals (active signups who joined through this person's link), consent_version, created_at, expires_at. It returns a CSV page of up to 500 active records. If `X-Next-Cursor` is present, request `/export?after=<cursor>` and repeat until it is absent. Concatenate rows without repeating the header. Formula-like cells are prefixed with an apostrophe for spreadsheet safety. Timestamps are Unix seconds in UTC.
 - `DELETE /preorder` with JSON `{"email":"person@example.com"}` erases that record. The email goes in the request body, never the URL. This is idempotent. Verify the requester controls the address before erasure or changes.
 
 For a correction, verify the address, export its current consent details privately, erase the old record and ask the person to join again. Any mailing workflow must preserve the consent purpose and provide an effective unsubscribe method. Apply unsubscribe/deletion requests before the next send. This repository does not include a campaign sender.
