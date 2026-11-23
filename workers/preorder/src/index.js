@@ -114,11 +114,16 @@ export default {
         // Retry is safe. An unverified visitor cannot rewrite an existing person's choices
         // or extend their retention. Expired consent is removed before a fresh signup.
         await env.DB.prepare('DELETE FROM signups WHERE email = ? AND expires_at <= ?').bind(email, now).run();
-        await env.DB.prepare(`INSERT OR IGNORE INTO signups (email, price, size, country, ref_code, referred_by, consent_version, created_at, expires_at)
+        const inserted = await env.DB.prepare(`INSERT OR IGNORE INTO signups (email, price, size, country, ref_code, referred_by, consent_version, created_at, expires_at)
           SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE (SELECT count(*) FROM signups WHERE created_at > ?) < 1000`)
           .bind(email, price, size, country, ref, referredBy, CONSENT_VERSION, now, now + RETENTION, now - 86400).run();
         const saved = await env.DB.prepare('SELECT id FROM signups WHERE email = ? AND expires_at > ?').bind(email, now).first();
         if (!saved) return json({ error: 'The list is temporarily busy. Please try again later.' }, 503, { ...h, 'Retry-After': '3600' });
+        // Hand new signups to the welcome email worker. Only the row id goes on the queue.
+        // A queue failure never fails the signup; the row keeps welcome_sent_at NULL.
+        if (inserted?.meta?.changes === 1 && env.WELCOME_QUEUE) {
+          try { await env.WELCOME_QUEUE.send({ id: saved.id }); } catch {}
+        }
         return json({ ok: true, ...(ref ? { ref } : {}) }, 200, h);
       }
       if ((url.pathname === '/export' && request.method === 'GET') || (url.pathname === '/preorder' && request.method === 'DELETE')) {
@@ -135,7 +140,7 @@ export default {
             (SELECT count(*) FROM signups r WHERE r.referred_by = s.ref_code AND r.expires_at > ?) END AS referrals
           FROM signups s WHERE s.id > ? AND s.expires_at > ? ORDER BY s.id LIMIT 501`).bind(now, Number(rawCursor), now).all();
         const rows = results.slice(0, 500);
-        const fields = ['email', 'price', 'size', 'country', 'ref_code', 'referred_by', 'referrals', 'consent_version', 'created_at', 'expires_at'];
+        const fields = ['email', 'price', 'size', 'country', 'ref_code', 'referred_by', 'referrals', 'welcome_sent_at', 'consent_version', 'created_at', 'expires_at'];
         const csv = [fields, ...rows.map(row => fields.map(field => row[field]))].map(row => row.map(cell).join(',')).join('\r\n') + '\r\n';
         return new Response(csv, { headers: { ...h, 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': 'attachment; filename="vh-lamp-interest.csv"', ...(results.length > 500 ? { 'X-Next-Cursor': String(rows.at(-1).id) } : {}) } });
       }

@@ -16,6 +16,10 @@ name = "WRITE_LIMITER"
 namespace_id = "711092026"
 simple = { limit = 30, period = 60 }
 
+[[queues.producers]]
+binding = "WELCOME_QUEUE"
+queue = "vh-lamp-welcome"
+
 [triggers]
 crons = ["17 4 * * *"]
 

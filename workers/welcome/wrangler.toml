@@ -1,0 +1,26 @@
+name = "vh-lamp-welcome"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+account_id = "f5ac49ce8a9d47cd5075133745156169"
+workers_dev = false
+preview_urls = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vh-lamp-interest"
+database_id = "86a2dcc0-7eef-49fd-ae6a-5ebbae50ecc7"
+
+[[queues.consumers]]
+queue = "vh-lamp-welcome"
+max_batch_size = 10
+max_batch_timeout = 5
+max_retries = 5
+
+[vars]
+FROM = "v/h <hello@vh.do>"
+REPLY_TO = "vedh@vh.do"
+# While set, only these addresses are mailed. Remove to go live.
+ALLOWLIST = "dhaval@vh.do"
+
+[observability]
+enabled = false

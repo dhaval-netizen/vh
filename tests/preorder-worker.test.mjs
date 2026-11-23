@@ -7,7 +7,7 @@ import worker from '../workers/preorder/src/index.js';
 // Execute the production SQL against SQLite. Only the Cloudflare binding API is adapted.
 function fixture(t, limited = false) {
   const sqlite = new DatabaseSync(':memory:');
-  for (const file of ['0001_signups.sql', '0002_country_referral.sql']) sqlite.exec(readFileSync(new URL(`../workers/preorder/migrations/${file}`, import.meta.url), 'utf8'));
+  for (const file of ['0001_signups.sql', '0002_country_referral.sql', '0003_welcome_sent.sql']) sqlite.exec(readFileSync(new URL(`../workers/preorder/migrations/${file}`, import.meta.url), 'utf8'));
   t.after(() => sqlite.close());
   const DB = { prepare(sql) {
     const statement = sqlite.prepare(sql);
