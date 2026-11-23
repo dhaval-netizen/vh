@@ -1,5 +1,15 @@
 [
   {
+    "id": "2026-11-23-a-later-evening",
+    "slug": "2026-11-23-a-later-evening",
+    "title": "Leave room for a later evening",
+    "body": "A lamp should let you finish the chapter, even if it has learned your usual bedtime.\n\nThe lamp we're designing would learn locally from ordinary on/off use. A repeated switch-off time is useful context, but it cannot establish whether someone is still using the light.\n\nThe proposed behavior needs both a learned evening window and reliable evidence of sustained absence before an automatic fade. Uncertain presence should prevent automatic switch-off.\n\nThe same physical button should restore the light during a fade. Repeated corrections should make the assistance back off. There should be no schedule to edit or app to open because tonight is different.\n\nNo physical prototype has been built yet. Keeping the light on for a still reader is a requirement we need to validate, not a result we've established.\n\nSee the design and intended behavior: https://vh.do/lamp/",
+    "date": "2026-11-23",
+    "format": "text",
+    "sourceURL": "https://www.linkedin.com/feed/update/urn:li:share:7530671363381002240/",
+    "media": []
+  },
+  {
     "id": "2026-11-22-ready-again",
     "slug": "2026-11-22-ready-again",
     "title": "Measure the wait between jobs",
